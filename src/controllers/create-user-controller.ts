@@ -10,13 +10,29 @@ export class CreateUserController {
           .status(400)
           .json({ missingParam: `${username} has less than 3 characters.` })
       }
-      if (password.length < 8) {
-        return response
-          .status(400)
-          .json({ missingParam: `${password} has less than 8 characters.` })
+      const upperCaseLetter = /[A-Z]+/.test(password)
+        ? true
+        : {
+            missingParam: `Password does not contain uppercase letter.`
+          }
+      const oneDigit = /(?=.*?[0-9])/.test(password)
+        ? true
+        : { missingParam: `Password does not contain numbers.` }
+      const oneNumber =
+        password.length >= 8
+          ? true
+          : { missingParam: `Password has less than 8 characters.` }
+      if (upperCaseLetter !== true) {
+        return response.status(400).send(upperCaseLetter.valueOf())
       }
-      const user = createUserService.execute(request.body)
-      return response.status(200).json({ user })
+      if (oneDigit !== true) {
+        return response.status(400).send(oneDigit.valueOf())
+      }
+      if (oneNumber !== true) {
+        return response.status(400).send(oneNumber.valueOf())
+      }
+      const user = await createUserService.execute(request.body)
+      return response.status(200).send(user)
     } catch (error: any) {
       return response.status(500).json({ message: error.message })
     }
