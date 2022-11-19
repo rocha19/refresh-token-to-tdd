@@ -11,7 +11,7 @@ export class FindBalanceUserController {
       }
       return response.status(200).json({
         User: `${userExists.username}`,
-        Balance: `${userExists.accountId.balance}`
+        Balance: `${userExists.account.balance}`
       })
     } catch (error: any) {
       return response.status(500).json({ message: error.message })

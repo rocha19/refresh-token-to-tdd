@@ -16,13 +16,13 @@ export class CreateUserService {
         id: data.id,
         username: data.username,
         password,
-        accountId: {
+        account: {
           create: {
-            balance: 'R$ 100,00'
+            balance: 100.0
           }
         }
       }
     })
-    return user
+    return { user }
   }
 }

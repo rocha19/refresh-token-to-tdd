@@ -7,7 +7,7 @@ export class FindBalanceUserService {
       },
       select: {
         username: true,
-        accountId: {
+        account: {
           select: {
             balance: true
           }

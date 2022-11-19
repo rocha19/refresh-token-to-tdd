@@ -1,7 +1,7 @@
 export type Transactions = {
-  id: string
+  id?: string
   debitedAccountId: string
   creditedAccountId: string
-  value: string
-  createdAt: string
+  value: number
+  createdAt?: string
 }
