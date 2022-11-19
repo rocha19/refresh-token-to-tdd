@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "build": "tsc --build",
-    "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules src/shared/server.ts",
+    "dev": "ts-node-dev --respawn --transpile-only --exit-child --watch src --ignore-watch node_modules src/shared/server.ts",
     "start": "node dist/server.js"
   },
   "dependencies": {
