@@ -1,3 +1,3 @@
 export * from './create-user-service'
 export * from './find-user-service'
-export * from './auth-user-service'
+export * from './authentication-user-service'

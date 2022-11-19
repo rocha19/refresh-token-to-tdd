@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
-import { AuthUserService } from '@/services'
-export class AuthUserController {
+import { AuthenticationUserService } from '@/services'
+export class AuthenticationUserController {
   async handle(request: Request, response: Response) {
     try {
-      const authUserService = new AuthUserService()
-      const token = await authUserService.execute(request.body)
+      const authenticationUserService = new AuthenticationUserService()
+      const token = await authenticationUserService.execute(request.body)
       return response.status(200).send({ token })
     } catch (error: any) {
       return response.status(500).json({ message: error.message })

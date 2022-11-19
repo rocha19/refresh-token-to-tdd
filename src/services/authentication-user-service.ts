@@ -3,7 +3,7 @@ import { User } from '@/interfaces'
 import { prisma } from '@/shared/database'
 import { sign } from 'jsonwebtoken'
 import { compare } from 'bcrypt'
-export class AuthUserService {
+export class AuthenticationUserService {
   async execute({ username, password }: User) {
     const secret = process.env.SECRET
     if (!secret) throw new Error('Need a valid secret')
