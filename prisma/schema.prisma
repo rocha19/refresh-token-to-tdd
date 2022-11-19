@@ -11,26 +11,33 @@ datasource db {
 }
 
 model User {
-  id         String   @id @default(uuid())
-  username   String   @unique
-  password   String
-  accountsId String   @unique
-  accountId  Accounts @relation(fields: [accountsId], references: [id])
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  accountId String   @unique
+  account   Accounts @relation(fields: [accountId], references: [id])
 }
 
-model Transactions {
+model TransactionsCashOut {
   id               String   @id @default(uuid())
-  debitedAccountId Accounts @relation(fields: [accountsId], references: [id])
-  //   creditedAccountId Accounts @relation(fields: [accountsId], references: [id])
-  value            String
+  value            Float
   createdAt        DateTime @default(now())
-  accountsId       String
+  debitedAccountId String
+  accounts         Accounts @relation(fields: [debitedAccountId], references: [id])
+}
+
+model TransactionsCashIn {
+  id                String   @id @default(uuid())
+  value             Float
+  createdAt         DateTime @default(now())
+  creditedAccountId String
+  accounts          Accounts @relation(fields: [creditedAccountId], references: [id])
 }
 
 model Accounts {
-  id               String         @id @unique @default(uuid())
-  balance          String
-  debitedAccountId Transactions[]
-  // creditedAccountId Transactions[]
-  User             User?
+  id                  String                @id @unique @default(uuid())
+  balance             Float
+  user                User?
+  transactionsCashOut TransactionsCashOut[]
+  transactionsCashIn  TransactionsCashIn[]
 }
