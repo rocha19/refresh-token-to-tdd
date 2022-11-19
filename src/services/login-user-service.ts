@@ -1,9 +1,9 @@
 import 'dotenv/config'
 import { User } from '@/interfaces'
 import { prisma } from '@/shared/database'
-import { sign } from 'jsonwebtoken'
 import { compare } from 'bcrypt'
-export class AuthUserService {
+import { GenerateRefreshToken, GenerateTokenProvider } from '@/provider'
+export class LoginUserService {
   async execute({ username, password }: User) {
     const secret = process.env.SECRET
     if (!secret) throw new Error('Need a valid secret')
@@ -15,7 +15,15 @@ export class AuthUserService {
     if (!userExists) throw new Error('User incorrect')
     const passwordMatch = await compare(password, userExists.password)
     if (!passwordMatch) throw new Error('Password incorrect')
-    const token = sign({}, secret, { subject: userExists.id, expiresIn: '1d' })
-    return token
+    const generateTokenProvider = new GenerateTokenProvider()
+    const token = generateTokenProvider.execute(userExists.id)
+    await prisma.refreshToken.deleteMany({
+      where: {
+        userId: userExists.id
+      }
+    })
+    const generateRefreshToken = new GenerateRefreshToken()
+    const refreshToken = await generateRefreshToken.execute(userExists.id)
+    return { token, refreshToken }
   }
 }
