@@ -1,7 +1,7 @@
 import { prisma } from '@/shared/database'
-export class FindUserService {
+export class FindBalanceUserService {
   execute(username: string) {
-    const user = prisma.user.findFirst({
+    const balance = prisma.user.findFirst({
       where: {
         username
       },
@@ -14,9 +14,9 @@ export class FindUserService {
         }
       }
     })
-    if (!user) {
+    if (!balance) {
       throw new Error('User not found!')
     }
-    return user
+    return balance
   }
 }
