@@ -11,6 +11,7 @@
   "dependencies": {
     "@prisma/client": "^4.5.0",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.6",
     "dotenv": "^16.0.2",
     "express": "^4.17.1",
     "express-handler-errors": "^2.3.1",
